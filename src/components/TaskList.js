@@ -31,7 +31,7 @@ class TaskList extends Component {
   render() {
     var { task } = this.props;
     var elemTasks = this.props.tasks.map((task, index) =>
-      <TaskItem key={task.id} task={task} index={index} onUpdateStatus = {this.props.onUpdateStatus}
+      <TaskItem key={task.id} task={task} index={index} 
       onDelete = {this.props.onDelete}
       onUpdate = {this.props.onUpdate}/>);
     return (

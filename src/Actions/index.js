@@ -11,6 +11,13 @@ export const addTask = (task) => {
     }
 }
 
+export const updateStatus = (id) =>{
+    return {
+        type : types.UPDATE_STATUS,
+        id
+    }
+}
+
 export const toggleForm = () => {
     return { type: types.TOGGLE_FORM };
 }
