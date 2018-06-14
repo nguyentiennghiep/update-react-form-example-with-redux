@@ -205,7 +205,7 @@ class App extends Component {
             <Control onSearch={this.onSearch}
               onSort={this.onSort} />
             <div className="row mt-15">
-              <TaskList tasks={tasks}
+              <TaskList 
                 onUpdateStatus={this.onUpdateStatus}
                 onDelete={this.onDelete}
                 onUpdate={this.onUpdate}
