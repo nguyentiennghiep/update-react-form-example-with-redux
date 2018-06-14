@@ -3,13 +3,15 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
+import {connect} from 'react-redux';
+import * as actions from './Actions/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // tasks: [],
-      isDisplayForm: false,
+      // isDisplayForm: false,
       taskEditing: null,
       filter: {
         name: '',
@@ -31,45 +33,46 @@ class App extends Component {
 
 
   onToggleForm = () => {
-    if (this.state.isDisplayForm === true && this.state.taskEditing !== null) {
+    // if (this.state.isDisplayForm === true && this.state.taskEditing !== null) {
 
-      this.setState({
-        isDisplayForm: true,
-        taskEditing: null
-      });
-    }
-    else {
-      this.setState({
-        isDisplayForm: !this.state.isDisplayForm,
-        taskEditing: null
-      });
-    }
+    //   this.setState({
+    //     isDisplayForm: true,
+    //     taskEditing: null
+    //   });
+    // }
+    // else {
+    //   this.setState({
+    //     isDisplayForm: !this.state.isDisplayForm,
+    //     taskEditing: null
+    //   });
+    // }
+    this.props.onToggleForm();
   }
 
-  onShowForm = () => {
-    this.setState({ isDisplayForm: true });
-  }
+  // onShowForm = () => {
+  //   this.setState({ isDisplayForm: true });
+  // }
 
-  onCloseForm = () => {
-    return this.setState({ isDisplayForm: false });
-  }
+  // onCloseForm = () => {
+  //   return this.setState({ isDisplayForm: false });
+  // }
 
-  onSubmit = (data) => {
-    var { tasks } = this.state;
-    if (data.id === '') {
-      data.id = this.generateID();
-      tasks.push(data);
-    }
-    else {
-      var index = this.findIndex(data.id)
-      tasks[index] = data;
-    }
-    this.setState({
-      tasks: tasks,
-      taskEditing: null
-    });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }
+  // onSubmit = (data) => {
+  //   var { tasks } = this.state;
+  //   if (data.id === '') {
+  //     data.id = this.generateID();
+  //     tasks.push(data);
+  //   }
+  //   else {
+  //     var index = this.findIndex(data.id)
+  //     tasks[index] = data;
+  //   }
+  //   this.setState({
+  //     tasks: tasks,
+  //     taskEditing: null
+  //   });
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
+  // }
 
   onUpdateStatus = (id) => {
     var { tasks } = this.state;
@@ -140,6 +143,8 @@ class App extends Component {
 
   render() {
     var {  isDisplayForm, taskEditing, filter, keyword, sortName, sortValue } = this.state;
+    var {isDisplayForm} = this.props;
+   
     // if (filter) {
     //   if (filter.name) {
     //     tasks = tasks.filter((task) => {
@@ -185,8 +190,9 @@ class App extends Component {
         <div className="row">
           <div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" :
             ""}>
-            {isDisplayForm ? <TaskForm onCloseForm={this.onCloseForm}
-              onSubmit={this.onSubmit}
+            {isDisplayForm ? <TaskForm 
+            //onCloseForm={this.onCloseForm}
+              // onSubmit={this.onSubmit}
               task={taskEditing}
             /> : ""}
           </div>
@@ -211,4 +217,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state =>{
+  return {
+    isDisplayForm : state.isDisplayForm
+  }
+}
+
+const mapDispatchToProps = (dispatch,props) =>{
+  return {
+    onToggleForm : () =>{
+      dispatch(actions.toggleForm())
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
