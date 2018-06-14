@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [],
+      // tasks: [],
       isDisplayForm: false,
       taskEditing: null,
       filter: {
@@ -22,20 +22,13 @@ class App extends Component {
 
   }
 
-  componentWillMount() {
-    if (localStorage && localStorage.getItem('tasks')) {
-      var tasks = JSON.parse(localStorage.getItem('tasks'));
-      this.setState({ tasks: tasks });
-    }
-  }
+  // componentWillMount() {
+  //   if (localStorage && localStorage.getItem('tasks')) {
+  //     var tasks = JSON.parse(localStorage.getItem('tasks'));
+  //     this.setState({ tasks: tasks });
+  //   }
+  // }
 
-  s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-
-  generateID() {
-    return this.s4() + this.s4() + '-' + this.s4() + this.s4() + '-' + this.s4() + this.s4() + '-' + this.s4() + this.s4() + this.s4();
-  }
 
   onToggleForm = () => {
     if (this.state.isDisplayForm === true && this.state.taskEditing !== null) {
@@ -146,43 +139,43 @@ class App extends Component {
   }
 
   render() {
-    var { tasks, isDisplayForm, taskEditing, filter, keyword, sortName, sortValue } = this.state;
-    if (filter) {
-      if (filter.name) {
-        tasks = tasks.filter((task) => {
-          return task.name.toLowerCase().indexOf(filter.name.toLowerCase()) !== -1;
-        })
-      }
-      if (filter.status !== -1) {
-        tasks = tasks.filter((task) => {
-          return task.status === (filter.status === 1 ? true : false);
-        });
-      }
-    }
+    var {  isDisplayForm, taskEditing, filter, keyword, sortName, sortValue } = this.state;
+    // if (filter) {
+    //   if (filter.name) {
+    //     tasks = tasks.filter((task) => {
+    //       return task.name.toLowerCase().indexOf(filter.name.toLowerCase()) !== -1;
+    //     })
+    //   }
+    //   if (filter.status !== -1) {
+    //     tasks = tasks.filter((task) => {
+    //       return task.status === (filter.status === 1 ? true : false);
+    //     });
+    //   }
+    // }
 
-    if (keyword) {
-      tasks = tasks.filter((task) => {
-        return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
-      })
-    }
-    if (sortName === 'name') {
-      tasks.sort((a, b) => {
-        if (a.name.toUpperCase() > b.name.toUpperCase())
-         return sortValue;
-        else if (a.name.toUpperCase() < b.name.toUpperCase())
-          return -sortValue;
-        else return 0;
-      });
-    }
-    if (sortName === 'status') {
-      tasks.sort((a, b) => {
-        if (a.status > b.status)
-          return -sortValue;
-        else if (a.status < b.status)
-          return sortValue;
-        else return 0;
-      });
-    }
+    // if (keyword) {
+    //   tasks = tasks.filter((task) => {
+    //     return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+    //   })
+    // }
+    // if (sortName === 'name') {
+    //   tasks.sort((a, b) => {
+    //     if (a.name.toUpperCase() > b.name.toUpperCase())
+    //      return sortValue;
+    //     else if (a.name.toUpperCase() < b.name.toUpperCase())
+    //       return -sortValue;
+    //     else return 0;
+    //   });
+    // }
+    // if (sortName === 'status') {
+    //   tasks.sort((a, b) => {
+    //     if (a.status > b.status)
+    //       return -sortValue;
+    //     else if (a.status < b.status)
+    //       return sortValue;
+    //     else return 0;
+    //   });
+    // }
     return (
       <div className="container">
         <div className="text-center">

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as actions from './../Actions/index'
 
 class TaskForm extends Component {
     constructor(props) {
@@ -10,16 +12,16 @@ class TaskForm extends Component {
         };
     }
 
-    componentWillMount() {
-        if (this.props.task) {
-            this.setState({
-                id: this.props.task.id,
-                name: this.props.task.name,
-                status: this.props.task.status
-            });
-        }
+    // componentWillMount() {
+    //     if (this.props.task) {
+    //         this.setState({
+    //             id: this.props.task.id,
+    //             name: this.props.task.name,
+    //             status: this.props.task.status
+    //         });
+    //     }
 
-    }
+    // }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps && nextProps.task) {
@@ -54,7 +56,8 @@ class TaskForm extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.onSubmit(this.state);
+        // this.props.onSubmit(this.state);
+        this.props.onAddTask(this.state);
         this.onClear();
         this.onCloseForm();
     }
@@ -102,4 +105,18 @@ class TaskForm extends Component {
     }
 }
 
-export default TaskForm;
+const mapStateToProps = (state) => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = (dispatch,props) =>{
+    return {
+        onAddTask : (task) =>{
+            dispatch(actions.addTask(task));
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TaskForm);
