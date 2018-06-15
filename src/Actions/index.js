@@ -43,3 +43,10 @@ export const openForm = () => {
 export const closeForm = () => {
     return { type: types.CLOSE_FORM };
 }
+
+export const filterTable = (filterTable) =>{
+    return {
+        type :types.FILTER_TABLE,
+        filterTable
+    }
+}

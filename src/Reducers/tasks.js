@@ -1,5 +1,5 @@
 import * as types from '../Constants/ActionTypes';
-import { updateStatus } from '../Actions';
+
 
 
 var s4 = () => {
@@ -34,8 +34,8 @@ var myReducer = (state = initialState, action) => {
                 if (action.task.id && ((index = findIndex(action.task.id, state)) !== -1)) {
                     state[index] = {
                         ...state[index],
-                        name : action.task.name,
-                        status : action.task.status
+                        name: action.task.name,
+                        status: action.task.status
                     };
                 }
                 else {
@@ -76,8 +76,6 @@ var myReducer = (state = initialState, action) => {
             }
         default: return [...state];
     }
-
-
 }
 
 export default myReducer;

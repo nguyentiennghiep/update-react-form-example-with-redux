@@ -108,18 +108,18 @@ class App extends Component {
   //   this.onShowForm();
   // }
 
-  onFilter = (name, status) => {
+  // onFilter = (name, status) => {
 
-    status = parseInt(status, 10);
+  //   status = parseInt(status, 10);
 
-    this.setState({
-      filter: {
-        name: name,
-        status: status
-      }
-    });
+  //   this.setState({
+  //     filter: {
+  //       name: name,
+  //       status: status
+  //     }
+  //   });
 
-  }
+  // }
 
   onSearch = (keyword) => {
     this.setState({ keyword: keyword });
@@ -201,7 +201,8 @@ class App extends Component {
                 //onUpdateStatus={this.onUpdateStatus}
                 // onDelete={this.onDelete}
                 //onUpdate={this.onUpdate}
-                onFilter={this.onFilter} />
+                //onFilter={this.onFilter} 
+                />
             </div>
           </div>
         </div>

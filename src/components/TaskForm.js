@@ -73,7 +73,6 @@ class TaskForm extends Component {
         });
     }
     render() {
-        var { tasks, task } = this.props;
         return (
             <div className="panel panel-warning">
                 <div className="panel-heading">
