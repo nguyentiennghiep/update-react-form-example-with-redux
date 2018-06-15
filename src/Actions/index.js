@@ -25,6 +25,13 @@ export const deleteTask = (id) =>{
     }
 }
 
+export const updateTask = (task) =>{
+    return {
+        type : types.UPDATE_TASK,
+        task
+    }
+}
+
 export const toggleForm = () => {
     return { type: types.TOGGLE_FORM };
 }

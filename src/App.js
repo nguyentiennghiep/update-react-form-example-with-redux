@@ -3,7 +3,7 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as actions from './Actions/index';
 
 class App extends Component {
@@ -33,20 +33,22 @@ class App extends Component {
 
 
   onToggleForm = () => {
-    // if (this.state.isDisplayForm === true && this.state.taskEditing !== null) {
+    console.log(this.props.isDisplayForm,'-',this.props.taskEditing.id);
+    if (this.props.isDisplayForm === true && this.props.taskEditing.id !== null) {
+      this.props.openForm();
+      
+    }
+    else {
+      console.log(123);
+      this.props.onToggleForm();
+    }
+    this.props.onUpdate({
+      id: '',
+      name: '',
+      status: false
+    }
+    );
 
-    //   this.setState({
-    //     isDisplayForm: true,
-    //     taskEditing: null
-    //   });
-    // }
-    // else {
-    //   this.setState({
-    //     isDisplayForm: !this.state.isDisplayForm,
-    //     taskEditing: null
-    //   });
-    // }
-    this.props.onToggleForm();
   }
 
   // onShowForm = () => {
@@ -106,14 +108,14 @@ class App extends Component {
   //   this.onCloseForm();
   // }
 
-  onUpdate = (id) => {
-    var { tasks } = this.state;
-    tasks.forEach((task, index) => {
-      if (task.id === id)
-        this.setState({ taskEditing: task });
-    });
-    this.onShowForm();
-  }
+  // onUpdate = (id) => {
+  //   var { tasks } = this.state;
+  //   tasks.forEach((task, index) => {
+  //     if (task.id === id)
+  //       this.setState({ taskEditing: task });
+  //   });
+  //   this.onShowForm();
+  // }
 
   onFilter = (name, status) => {
 
@@ -138,13 +140,13 @@ class App extends Component {
       sortName: sortName,
       sortValue: sortValue
     });
-    
+
   }
 
   render() {
-    var {  isDisplayForm, taskEditing, filter, keyword, sortName, sortValue } = this.state;
-    var {isDisplayForm} = this.props;
-   
+    var { isDisplayForm, taskEditing, filter, keyword, sortName, sortValue } = this.state;
+    var { isDisplayForm } = this.props;
+
     // if (filter) {
     //   if (filter.name) {
     //     tasks = tasks.filter((task) => {
@@ -190,10 +192,10 @@ class App extends Component {
         <div className="row">
           <div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" :
             ""}>
-            {isDisplayForm ? <TaskForm 
+            {isDisplayForm ? <TaskForm
             //onCloseForm={this.onCloseForm}
-              // onSubmit={this.onSubmit}
-              task={taskEditing}
+            // onSubmit={this.onSubmit}
+            //task={taskEditing}
             /> : ""}
           </div>
           <div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" :
@@ -204,10 +206,10 @@ class App extends Component {
             <Control onSearch={this.onSearch}
               onSort={this.onSort} />
             <div className="row mt-15">
-              <TaskList 
+              <TaskList
                 //onUpdateStatus={this.onUpdateStatus}
                 // onDelete={this.onDelete}
-                onUpdate={this.onUpdate}
+                //onUpdate={this.onUpdate}
                 onFilter={this.onFilter} />
             </div>
           </div>
@@ -217,18 +219,25 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
   return {
-    isDisplayForm : state.isDisplayForm
+    isDisplayForm: state.isDisplayForm,
+    taskEditing: state.taskEditing
   }
 }
 
-const mapDispatchToProps = (dispatch,props) =>{
+const mapDispatchToProps = (dispatch, props) => {
   return {
-    onToggleForm : () =>{
+    onToggleForm: () => {
       dispatch(actions.toggleForm())
+    },
+    onUpdate: (task) => {
+      dispatch(actions.updateTask(task));
+    },
+    openForm: () => {
+      dispatch(actions.openForm());
     }
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

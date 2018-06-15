@@ -10,6 +10,17 @@ var generateID = () => {
     return s4() + s4() + '-' + s4() + s4() + '-' + s4() + s4() + '-' + s4() + s4() + s4();
 }
 
+var findIndex = (id, tasks) => {
+    var result = -1;
+    tasks.forEach((task, index) => {
+        if (task.id === id) {
+            result = index;
+        }
+    });
+    return result;
+}
+
+var index = -1;
 
 var data = JSON.parse(localStorage.getItem('tasks'))
 var initialState = data ? data : [];
@@ -20,38 +31,47 @@ var myReducer = (state = initialState, action) => {
             return state;
         case types.ADD_TASK:
             {
-                console.log(action);
-                var newTask = {
-                    id: generateID(),
-                    name: action.task.name,
-                    status: (action.task.status === 'true' ? true : false)
+                if (action.task.id && ((index = findIndex(action.task.id, state)) !== -1)) {
+                    state[index] = {
+                        ...state[index],
+                        name : action.task.name,
+                        status : action.task.status
+                    };
                 }
-                state.push(newTask);
+                else {
+                    var newTask = {
+                        id: generateID(),
+                        name: action.task.name,
+                        status: (action.task.status === true ? true : false)
+                    }
+                    state.push(newTask);
+                }
+
                 localStorage.setItem('tasks', JSON.stringify(state));
+                index = -1;
                 return [...state];
             }
         case types.UPDATE_STATUS:
             {
-
-                state.forEach((task, index) => {
-                    if (task.id === action.id) {
-                        state[index] = {
-                            ...state[index],
-                            status: !state[index].status
-                        };
-                    }
-                });
+                index = findIndex(action.id, state)
+                if (index !== -1) {
+                    state[index] = {
+                        ...state[index],
+                        status: !state[index].status
+                    };
+                }
                 localStorage.setItem('tasks', JSON.stringify(state));
+                index = -1;
                 return [...state];
             }
         case types.DELETE:
             {
-                state.forEach((task, index) => {
-                    if (task.id === action.id) {
-                        state.splice(index,1);
-                    }
-                });
+                index = findIndex(action.id, state);
+                if (index !== -1) {
+                    state.splice(index, 1);
+                }
                 localStorage.setItem('tasks', JSON.stringify(state));
+                index = -1;
                 return [...state];
             }
         default: return [...state];
