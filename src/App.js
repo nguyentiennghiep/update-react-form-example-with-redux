@@ -22,13 +22,6 @@ class App extends Component {
 
   }
 
-  // componentWillMount() {
-  //   if (localStorage && localStorage.getItem('tasks')) {
-  //     var tasks = JSON.parse(localStorage.getItem('tasks'));
-  //     this.setState({ tasks: tasks });
-  //   }
-  // }
-
 
   onToggleForm = () => {
     console.log(this.props.isDisplayForm,'-',this.props.taskEditing.id);
