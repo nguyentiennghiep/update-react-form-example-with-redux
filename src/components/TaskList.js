@@ -18,30 +18,23 @@ class TaskList extends Component {
     var target = envent.target;
     var name = target.name;
     var value = target.value;
-
+    this.setState({ [name]: value });
     var filterVar = {
       status: name === "filterStatus" ? value : this.state.filterStatus,
       name: name === "filterName" ? value : this.state.filterName
     };
 
-    this.setState({ [name]: value });
     this.props.onFilterTable(filterVar);
   }
 
   render() {
 
     var { tasks, filter } = this.props;
-    // if (filter.status !== 0 && filter.status !== 1 && filter.status !== -1) {
-    //   filter.status = -1;
-    // }
     if (filter) {
-
       if (filter.name) {
-
         tasks = tasks.filter((task) => {
           return task.name.toLowerCase().indexOf(filter.name.toLowerCase()) !== -1;
         })
-
       }
       if (filter.status !== -1) {
         tasks = tasks.filter((task) => {
@@ -51,7 +44,7 @@ class TaskList extends Component {
     }
     var elemTasks = tasks.map((task, index) =>
       <TaskItem key={task.id} task={task} index={index}
-        onUpdate={this.props.onUpdate} />);
+      />);
 
     return (
       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -74,9 +67,9 @@ class TaskList extends Component {
               <td>
                 <select className="form-control" name="filterStatus"
                   value={this.state.filterStaus} onChange={this.onChange}>
-                  <option value='-1'>All</option>
-                  <option value='0'>Deactive</option>
-                  <option value='1'>Active</option>
+                  <option value={-1}>All</option>
+                  <option value={0}>Deactive</option>
+                  <option value={1}>Active</option>
                 </select>
               </td>
               <td></td>
@@ -89,7 +82,7 @@ class TaskList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     tasks: state.tasks,
     filter: state.filterTable
@@ -98,8 +91,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onFilterTable: (filterTable) => {
-      dispatch(actions.filterTable(filterTable))
+    onFilterTable: (data) => {
+      dispatch(actions.filterTable(data))
     }
   }
 }
