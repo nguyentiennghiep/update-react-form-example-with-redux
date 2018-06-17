@@ -29,7 +29,8 @@ class TaskList extends Component {
 
   render() {
 
-    var { tasks, filter } = this.props;
+    var { tasks, filter, keyword } = this.props;
+    console.log(keyword);
     if (filter) {
       if (filter.name) {
         tasks = tasks.filter((task) => {
@@ -42,6 +43,13 @@ class TaskList extends Component {
         });
       }
     }
+
+    if (keyword) {
+      tasks = tasks.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+      })
+    }
+    
     var elemTasks = tasks.map((task, index) =>
       <TaskItem key={task.id} task={task} index={index}
       />);
@@ -85,7 +93,8 @@ class TaskList extends Component {
 const mapStateToProps = state => {
   return {
     tasks: state.tasks,
-    filter: state.filterTable
+    filter: state.filterTable,
+    keyword: state.search
   }
 }
 
